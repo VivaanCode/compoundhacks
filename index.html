@@ -118,18 +118,45 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   text-transform:uppercase; color:var(--blue); margin:0 0 14px;
 }
 .hero h1{
-  font-size:clamp(56px,11vw,120px); line-height:.92;
-  letter-spacing:-.045em; font-weight:700; margin:0 0 20px;
+  font-size:clamp(58px,11.5vw,132px); line-height:.88;
+  letter-spacing:-.052em; font-weight:700; margin:0 0 28px;
 }
 .hero h1 em{ font-style:normal; color:var(--blue); }
-.hero .lede{ font-size:clamp(17px,2.2vw,20px); }
-.chips{ display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 32px; padding:0; list-style:none; }
-.chip{
-  font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:var(--ink);
-  background:var(--white); border:1px solid var(--line);
-  border-radius:999px; padding:6px 13px;
+.hero .lede{
+  font-size:clamp(17px,1.7vw,20px); line-height:1.55;
+  max-width:46ch; color:var(--muted);
 }
+
+/* line-by-line mask reveal on load */
+.hero-title .line{
+  display:block; overflow:hidden;
+  padding-bottom:.06em; margin-bottom:-.06em;
+}
+.hero-title .line-in{
+  display:block; transform:translateY(105%);
+  animation:riseIn .95s cubic-bezier(.19,1,.22,1) forwards;
+}
+.hero-title .line:nth-child(1) .line-in{ animation-delay:.08s; }
+.hero-title .line:nth-child(2) .line-in{ animation-delay:.20s; }
+
+.hero-lede, .hero-cta{
+  opacity:0; transform:translateY(14px);
+  animation:liftIn .9s cubic-bezier(.19,1,.22,1) forwards;
+}
+.hero-lede{ animation-delay:.42s; }
+.hero-cta{ animation-delay:.54s; }
+
+@keyframes riseIn{ to{ transform:translateY(0); } }
+@keyframes liftIn{ to{ opacity:1; transform:none; } }
 .cta-row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+
+/* section titles rise out of a mask when scrolled to */
+.title.mask{ overflow:hidden; padding-bottom:.1em; }
+.title .ti{
+  display:inline-block; transform:translateY(108%);
+  transition:transform .85s cubic-bezier(.19,1,.22,1) .1s;
+}
+.reveal.is-in .title .ti{ transform:translateY(0); }
 
 .btn{
   display:inline-flex; align-items:center; gap:9px;
@@ -368,6 +395,9 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   .reveal{ opacity:1; transform:none; }
   .wave-line{ animation:none !important; }
   .digits.flip{ opacity:1; transform:none; }
+  .hero-title .line-in,
+  .title .ti{ transform:none !important; }
+  .hero-lede, .hero-cta{ opacity:1; transform:none; }
 }
 </style>
 </head>
@@ -390,16 +420,12 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
     <div class="waves" id="waves" aria-hidden="true"></div>
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow reveal">A DevFintech event · Bay Area · In person</p>
-        <h1 class="reveal">Build<br>with <em>money.</em></h1>
-        <p class="lede reveal">Fintech is a one-day hackathon for high schoolers. Show up at 8, form a team, build something, and pitch it to judges by 20:00. Free to enter, food included, no experience needed.</p>
-        <ul class="chips reveal">
-          <li class="chip">High schoolers</li>
-          <li class="chip">Free entry</li>
-          <li class="chip">Fully catered</li>
-          <li class="chip">December 2, 2026</li>
-        </ul>
-        <div class="cta-row reveal">
+        <h1 class="hero-title">
+          <span class="line"><span class="line-in">Build</span></span>
+          <span class="line"><span class="line-in">with <em>money.</em></span></span>
+        </h1>
+        <p class="lede hero-lede">A one-day hackathon for Bay Area high schoolers. Show up at 8, form a team, build something that touches money, and pitch it to judges by 20:00. Free to enter, food included, no experience needed.</p>
+        <div class="cta-row hero-cta">
           <button class="btn btn--primary btn--lg" data-goto="signup">Sign up →</button>
           <a class="btn btn--ghost btn--lg" href="#tracks">See the tracks</a>
         </div>
@@ -407,7 +433,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
       <div class="countdown reveal" id="countdown">
         <div class="countdown-top">
           <span>Hacking starts in</span>
-          <b>Wed · Dec 2, 2026</b>
+          <b>December 2, 2026</b>
         </div>
         <div class="clock">
           <div class="unit"><span class="digits" data-cd="days">--</span><span class="unit-label">days</span></div>
@@ -610,7 +636,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
       </div>
       <div class="embed reveal">
         <div class="embed-bar">
-          <span>Fintech · registration</span>
+          <span>Registration</span>
           <a href="https://okoushiko.github.io/compound-signup/" target="_blank" rel="noopener">Open in a new tab ↗</a>
         </div>
         <iframe src="https://okoushiko.github.io/compound-signup/" title="Fintech hackathon registration form" loading="lazy"></iframe>
@@ -637,7 +663,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 
 <footer class="footer">
   <div class="wrap footer-in">
-    <span class="org">Fintech · organized by DevFintech</span>
+    <span class="org">Organized by DevFintech</span>
     <span><a href="mailto:thedevfintech@gmail.com">thedevfintech@gmail.com</a></span>
   </div>
 </footer>
@@ -695,6 +721,17 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
       io.observe(el);
     });
   }
+
+  /* ---------- section title masks ---------- */
+  document.querySelectorAll('.title').forEach(function(el){
+    if(el.querySelector('.ti')) return;
+    var span = document.createElement('span');
+    span.className = 'ti';
+    span.textContent = el.textContent;
+    el.textContent = '';
+    el.appendChild(span);
+    el.classList.add('mask');
+  });
 
   /* ---------- hero wave field ---------- */
   /* 18 sine lines. Geometry varies per line; timing does not — every
