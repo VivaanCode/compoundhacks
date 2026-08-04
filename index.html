@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fintech — a hackathon for high schoolers | DevFintech</title>
+<meta name="description" content="Fintech is an in-person Bay Area hackathon for high school students, run by DevFintech. Three tracks, three winners, one overall. Free to enter.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Fintech — DevFintech hackathon
+   White + DevFintech blue. Section titles keep the letter-spaced
+   treatment from the Figma, alternating left/right like the deck.
+   Animation rule: only transform + opacity. No animated filters.
+   ============================================================ */
+
+:root{
+  --white:#FFFFFF;
+  --mist:#F4F7FB;
+  --line:#DCE6F6;
+  --blue:#2F6FED;
+  --blue-deep:#1B4CB8;
+  --blue-wash:#EAF1FE;
+  --ink:#1A2430;
+  --muted:#5B6B7F;
+
+  --display:'Space Grotesk', system-ui, sans-serif;
+  --body:'Inter', system-ui, sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+
+  --pad:clamp(20px,5vw,40px);
+  --maxw:1120px;
+  --r:14px;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--white); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{ color:var(--blue); text-decoration:none; }
+a:hover{ color:var(--blue-deep); }
+:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
+
+h1,h2,h3{ font-family:var(--display); font-weight:600; letter-spacing:-.02em; margin:0; }
+h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
+.lede{ color:var(--muted); font-size:clamp(16px,2vw,18px); max-width:60ch; }
+
+/* section title, letter-spaced like the deck */
+.title{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(30px,5.6vw,58px);
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--blue); line-height:1.05; margin:0 0 16px;
+}
+.section-head{ margin-bottom:44px; }
+.section-head--right{ text-align:right; }
+.section-head--right .lede{ margin-left:auto; }
+
+/* ---------- header + tabs ---------- */
+.header{
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.88); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.header-in{
+  max-width:var(--maxw); margin:0 auto; padding:14px var(--pad);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--display); font-weight:700; font-size:17px;
+  color:var(--ink); letter-spacing:-.02em;
+}
+.brand .mark{
+  width:26px; height:26px; border-radius:7px; background:var(--blue);
+  display:grid; place-items:center; color:#fff;
+  font-size:12px; font-family:var(--mono); font-weight:500;
+}
+.brand small{
+  font-family:var(--mono); font-size:11px; font-weight:400; color:var(--muted);
+  letter-spacing:.06em; text-transform:uppercase;
+}
+.tabs{
+  display:flex; gap:4px; background:var(--mist);
+  border:1px solid var(--line); border-radius:999px; padding:4px;
+}
+.tab{
+  appearance:none; border:0; cursor:pointer; background:transparent;
+  font-family:var(--body); font-size:14px; font-weight:500; color:var(--muted);
+  padding:8px 18px; border-radius:999px;
+  transition:color .2s ease, background-color .2s ease;
+}
+.tab:hover{ color:var(--ink); }
+.tab[aria-selected="true"]{
+  background:var(--white); color:var(--ink);
+  box-shadow:0 1px 3px rgba(26,36,48,.10);
+}
+
+/* ---------- layout ---------- */
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+.panel[hidden]{ display:none; }
+.section{ padding:clamp(60px,8vw,104px) 0; }
+.section--mist{ background:var(--mist); border-block:1px solid var(--line); }
+
+/* ---------- hero ---------- */
+.hero{ position:relative; overflow:hidden; padding:clamp(56px,8vw,96px) 0 clamp(48px,7vw,84px); }
+.hero .wrap{ position:relative; z-index:1; }
+.hero-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(32px,5vw,64px); align-items:center; }
+.eyebrow{
+  font-family:var(--mono); font-size:12px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--blue); margin:0 0 14px;
+}
+.hero h1{
+  font-size:clamp(56px,11vw,120px); line-height:.92;
+  letter-spacing:-.045em; font-weight:700; margin:0 0 20px;
+}
+.hero h1 em{ font-style:normal; color:var(--blue); }
+.hero .lede{ font-size:clamp(17px,2.2vw,20px); }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 32px; padding:0; list-style:none; }
+.chip{
+  font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:var(--ink);
+  background:var(--white); border:1px solid var(--line);
+  border-radius:999px; padding:6px 13px;
+}
+.cta-row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+
+.btn{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:var(--body); font-size:15px; font-weight:600;
+  padding:13px 24px; border-radius:999px; border:1px solid transparent; cursor:pointer;
+  transition:transform .18s ease, background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+.btn:active{ transform:translateY(1px); }
+.btn--primary{ background:var(--blue); color:#fff; }
+.btn--primary:hover{ background:var(--blue-deep); color:#fff; }
+.btn--ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
+.btn--ghost:hover{ border-color:var(--blue); color:var(--blue); }
+.btn--lg{ font-size:16px; padding:16px 30px; }
+
+/* ---------- hero wave field ----------
+   One shared duration, staggered delay only. Different durations per
+   line create beat frequencies and read as strobing. Transform only. */
+.waves{
+  position:absolute; inset:0;
+  z-index:0; pointer-events:none; overflow:hidden;
+  background:
+    radial-gradient(120% 80% at 78% 18%, var(--blue-wash) 0%, rgba(234,241,254,0) 62%),
+    radial-gradient(90% 70% at 8% 90%, rgba(47,111,237,.05) 0%, rgba(47,111,237,0) 60%);
+  mask-image:linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+}
+.waves svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.waves path{ fill:none; stroke:var(--blue); vector-effect:non-scaling-stroke; }
+.wave-line{ animation:sway 22s linear infinite; will-change:transform; }
+@keyframes sway{ from{ transform:translateX(0); } to{ transform:translateX(-1600px); } }
+
+/* ---------- countdown ---------- */
+.countdown{
+  position:relative; z-index:1;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--line); border-radius:20px;
+  padding:22px 22px 16px;
+  box-shadow:0 26px 60px -34px rgba(27,76,184,.55);
+}
+.countdown-top{
+  display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:16px;
+}
+.countdown-top b{ color:var(--blue); font-weight:500; }
+
+.clock{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.unit{
+  background:var(--white);
+  border:1px solid var(--line); border-radius:12px;
+  padding:16px 4px 12px;
+  display:flex; flex-direction:column; align-items:center;
+  transition:border-color .25s ease;
+}
+.unit:hover{ border-color:#BFD3F5; }
+.digits{
+  font-family:var(--mono); font-weight:500;
+  font-size:clamp(26px,3.6vw,40px); line-height:1;
+  letter-spacing:-.03em; color:var(--ink);
+  font-variant-numeric:tabular-nums;
+  transition:opacity .22s ease, transform .22s ease;
+}
+.digits.flip{ opacity:0; transform:translateY(-5px); }
+.unit-label{
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin-top:11px;
+}
+.countdown-msg{
+  font-family:var(--display); font-size:21px; font-weight:600;
+  color:var(--blue); margin:10px 0 6px; text-align:center;
+}
+.progress{
+  height:3px; border-radius:99px; background:var(--line);
+  margin-top:18px; overflow:hidden;
+}
+.progress-fill{
+  display:block; height:100%; width:0;
+  background:var(--blue); border-radius:99px;
+  transform-origin:left center;
+  transition:width 1s linear;
+}
+.countdown-foot{
+  display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:11px; color:var(--muted);
+  margin-top:12px;
+}
+.countdown.is-live .clock,
+.countdown.is-live .progress{ display:none; }
+
+/* ---------- cards ---------- */
+.grid{ display:grid; gap:16px; }
+.grid--3{ grid-template-columns:repeat(3,1fr); }
+.card{
+  background:var(--white); border:1px solid var(--line);
+  border-radius:var(--r); padding:26px;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.card:hover{
+  transform:translateY(-3px); border-color:#BFD3F5;
+  box-shadow:0 18px 40px -30px rgba(26,36,48,.5);
+}
+.card .num{
+  font-family:var(--mono); font-size:12px; color:var(--blue);
+  letter-spacing:.1em; display:block; margin-bottom:12px;
+}
+.card h3{ margin-bottom:8px; }
+.card p{ margin:0; color:var(--muted); font-size:15px; }
+.card--track h3{ font-size:22px; color:var(--blue); }
+
+/* ---------- schedule ---------- */
+.sched{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0 clamp(32px,6vw,72px);
+}
+.sched-col{ list-style:none; margin:0; padding:0; }
+.slot{
+  display:grid; grid-template-columns:76px 1fr; gap:20px;
+  padding:20px 0; border-top:1px solid var(--line);
+}
+.sched-col:last-child .slot:last-child,
+.sched-col:first-child .slot:last-child{ border-bottom:1px solid var(--line); }
+.slot .time{
+  font-family:var(--mono); font-size:15px; font-weight:500;
+  color:var(--blue); padding-top:3px;
+}
+.slot h3{ margin-bottom:5px; }
+.slot p{ margin:0; color:var(--muted); font-size:15px; }
+
+/* ---------- tiers / people ---------- */
+.tier{ padding:22px 0; border-top:1px solid var(--line); }
+.tier:last-of-type{ border-bottom:1px solid var(--line); }
+.tier-name{
+  font-family:var(--mono); font-size:12px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink); margin:0 0 8px;
+}
+.tier-slot{ color:var(--muted); font-size:15px; margin:0; }
+
+.people{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.person{
+  background:var(--white); border:1px solid var(--line);
+  border-radius:var(--r); padding:20px;
+}
+.person .name{ font-family:var(--display); font-weight:600; font-size:16px; margin:0 0 3px; }
+.person .role{ font-family:var(--mono); font-size:12px; color:var(--muted); margin:0; letter-spacing:.03em; }
+
+.note{
+  font-size:15px; color:var(--muted); margin:22px 0 0;
+}
+.note strong{ color:var(--ink); font-weight:600; }
+
+/* ---------- faq ---------- */
+.faq{ border-top:1px solid var(--line); max-width:760px; }
+.faq details{ border-bottom:1px solid var(--line); }
+.faq summary{
+  cursor:pointer; list-style:none;
+  font-family:var(--display); font-weight:500; font-size:17px;
+  padding:20px 40px 20px 0; position:relative;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+.faq summary::after{
+  content:'+'; position:absolute; right:6px; top:18px;
+  font-family:var(--mono); font-size:20px; color:var(--blue);
+  transition:transform .2s ease;
+}
+.faq details[open] summary::after{ transform:rotate(45deg); }
+.faq p{ margin:0 0 22px; color:var(--muted); font-size:15px; max-width:64ch; }
+
+/* ---------- callout ---------- */
+.callout{
+  background:var(--blue); border-radius:var(--r);
+  padding:clamp(32px,5vw,52px); color:#fff; text-align:center;
+}
+.callout h2{ color:#fff; margin-bottom:12px; font-size:clamp(28px,4.2vw,40px); }
+.callout p{ color:rgba(255,255,255,.82); max-width:50ch; margin:0 auto 26px; }
+.callout .btn--primary{ background:#fff; color:var(--blue); }
+.callout .btn--primary:hover{ background:var(--blue-wash); color:var(--blue-deep); }
+
+/* ---------- signup ---------- */
+.signup-head{ text-align:center; max-width:640px; margin:0 auto clamp(32px,5vw,48px); }
+.signup-head .lede{ margin:14px auto 0; }
+.embed{
+  border:1px solid var(--line); border-radius:var(--r); overflow:hidden;
+  background:var(--white); box-shadow:0 24px 60px -40px rgba(26,36,48,.5);
+}
+.embed-bar{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:11px 16px; background:var(--mist); border-bottom:1px solid var(--line);
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted);
+}
+.embed-bar a{ text-transform:none; letter-spacing:0; font-family:var(--body); font-size:13px; font-weight:500; }
+.embed iframe{ display:block; width:100%; height:760px; border:0; background:var(--white); }
+.fallback{ text-align:center; padding:20px 0 0; font-size:14px; color:var(--muted); }
+
+/* ---------- footer ---------- */
+.footer{ border-top:1px solid var(--line); padding:44px 0 56px; font-size:14px; color:var(--muted); }
+.footer-in{ display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center; }
+.footer .org{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+
+/* ---------- scroll reveal ---------- */
+.reveal{
+  opacity:0; transform:translateY(18px);
+  transition:opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity, transform;
+}
+.reveal.is-in{ opacity:1; transform:none; }
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .hero-grid{ grid-template-columns:1fr; }
+  .sched{ grid-template-columns:1fr; }
+  .people{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:640px){
+  body{ font-size:16px; }
+  .grid--3{ grid-template-columns:1fr; }
+  .people{ grid-template-columns:1fr; }
+  .title{ letter-spacing:.14em; }
+  .section-head--right{ text-align:left; }
+  .section-head--right .lede{ margin-left:0; }
+  .brand small{ display:none; }
+  .header-in{ flex-direction:column; align-items:stretch; }
+  .tabs{ justify-content:center; }
+  .embed iframe{ height:640px; }
+}
+
+@media (max-width:480px){
+  .clock{ grid-template-columns:repeat(2,1fr); }
+  .waves{ opacity:.75; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-delay:0s !important; transition-duration:.001ms !important; }
+  .reveal{ opacity:1; transform:none; }
+  .wave-line{ animation:none !important; }
+  .digits.flip{ opacity:1; transform:none; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-in">
+    <a class="brand" href="#top"><span class="mark">ƒ</span>Fintech <small>by DevFintech</small></a>
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" id="tab-info" role="tab" aria-selected="true" aria-controls="panel-info">The event</button>
+      <button class="tab" id="tab-signup" role="tab" aria-selected="false" aria-controls="panel-signup">Sign up</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= TAB 1 ================= -->
+<div class="panel" id="panel-info" role="tabpanel" aria-labelledby="tab-info" tabindex="-1">
+
+  <section class="hero" id="top">
+    <div class="waves" id="waves" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow reveal">A DevFintech event · Bay Area · In person</p>
+        <h1 class="reveal">Build<br>with <em>money.</em></h1>
+        <p class="lede reveal">Fintech is a one-day hackathon for high schoolers. Show up at 8, form a team, build something, and pitch it to judges by 20:00. Free to enter, food included, no experience needed.</p>
+        <ul class="chips reveal">
+          <li class="chip">High schoolers</li>
+          <li class="chip">Free entry</li>
+          <li class="chip">Fully catered</li>
+          <li class="chip">December 2, 2026</li>
+        </ul>
+        <div class="cta-row reveal">
+          <button class="btn btn--primary btn--lg" data-goto="signup">Sign up →</button>
+          <a class="btn btn--ghost btn--lg" href="#tracks">See the tracks</a>
+        </div>
+      </div>
+      <div class="countdown reveal" id="countdown">
+        <div class="countdown-top">
+          <span>Hacking starts in</span>
+          <b>Wed · Dec 2, 2026</b>
+        </div>
+        <div class="clock">
+          <div class="unit"><span class="digits" data-cd="days">--</span><span class="unit-label">days</span></div>
+          <div class="unit"><span class="digits" data-cd="hours">--</span><span class="unit-label">hours</span></div>
+          <div class="unit"><span class="digits" data-cd="mins">--</span><span class="unit-label">minutes</span></div>
+          <div class="unit"><span class="digits" data-cd="secs">--</span><span class="unit-label">seconds</span></div>
+        </div>
+        <p class="countdown-msg" id="countdown-msg" hidden>Check-in is open. See you there.</p>
+        <div class="progress"><span class="progress-fill" id="progress-fill"></span></div>
+        <div class="countdown-foot"><span>08:00 check-in</span><span>22:00 prizes</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACKS -->
+  <section class="section section--mist" id="tracks">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 class="title">Tracks</h2>
+        <p class="lede">Three tracks. Three winners. All tracks compete for overall winner. There will still be a theme, which is revealed during opening.</p>
+      </div>
+      <div class="grid grid--3">
+        <div class="card card--track reveal">
+          <h3>Best AI/ML</h3>
+          <p>Anything built on a model — an LLM, a classifier, something you trained yourself. A chatbot that explains a credit score counts. So does a model that reads market data.</p>
+        </div>
+        <div class="card card--track reveal">
+          <h3>Best Hardware</h3>
+          <p>For the hardware people who show up to every hackathon with a bin of parts. Arduino, Pi, sensors, anything physical. Bring your own components.</p>
+        </div>
+        <div class="card card--track reveal">
+          <h3>Best Funny/Cursed</h3>
+          <p>The project that shouldn't exist but does. Technically impressive, deeply unnecessary. Judged on how hard the room laughs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head section-head--right reveal">
+        <h2 class="title">Schedule</h2>
+        <p class="lede">One day, start to finish. December 2, 2026.</p>
+      </div>
+      <div class="sched">
+        <ul class="sched-col">
+          <li class="slot reveal">
+            <span class="time">8:00</span>
+            <div><h3>Check-in begins</h3><p>Grab your swag and badge, find a table, get warmed up with your team, grab a breakfast snack.</p></div>
+          </li>
+          <li class="slot reveal">
+            <span class="time">9:00</span>
+            <div><h3>Opening</h3><p>The opening presentation, sponsor keynotes, theme announcement.</p></div>
+          </li>
+          <li class="slot reveal">
+            <span class="time">9:30</span>
+            <div><h3>Workshop</h3><p>The world-famous How To Win A Hackathon workshop.</p></div>
+          </li>
+          <li class="slot reveal">
+            <span class="time">12:00</span>
+            <div><h3>Lunch</h3><p>Have a break, let your brain rest, and recharge with a fully catered meal.</p></div>
+          </li>
+        </ul>
+        <ul class="sched-col">
+          <li class="slot reveal">
+            <span class="time">13:00</span>
+            <div><h3>Workshop</h3><p>Second workshop of the day. Speaker and topic announced closer to the event.</p></div>
+          </li>
+          <li class="slot reveal">
+            <span class="time">18:00</span>
+            <div><h3>Dinner</h3><p>Catered dinner, because by this point everyone is hungry.</p></div>
+          </li>
+          <li class="slot reveal">
+            <span class="time">20:00</span>
+            <div><h3>Hacking ends</h3><p>Submit your projects and start preparing for judging, which commences immediately.</p></div>
+          </li>
+          <li class="slot reveal">
+            <span class="time">22:00</span>
+            <div><h3>Closing &amp; prizes</h3><p>Find out who won, collect prizes, and then we send everyone home.</p></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- JUDGES -->
+  <section class="section section--mist">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 class="title">Judges</h2>
+        <p class="lede">Interested in judging? Shoot us an email: <a href="mailto:thedevfintech@gmail.com?subject=Judging">thedevfintech@gmail.com</a>. Have the word "judging" in your subject line.</p>
+      </div>
+      <div class="people">
+        <div class="person reveal"><p class="name">Judge TBA</p><p class="role">announced soon</p></div>
+        <div class="person reveal"><p class="name">Judge TBA</p><p class="role">announced soon</p></div>
+        <div class="person reveal"><p class="name">Judge TBA</p><p class="role">announced soon</p></div>
+        <div class="person reveal"><p class="name">Judge TBA</p><p class="role">announced soon</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPONSORS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 class="title">Sponsors</h2>
+        <p class="lede">Interested in sponsoring? Shoot us an email: <a href="mailto:thedevfintech@gmail.com?subject=Sponsor">thedevfintech@gmail.com</a>. Have the word "sponsor" in your subject line.</p>
+      </div>
+      <div class="reveal">
+        <div class="tier"><p class="tier-name">Partner</p><p class="tier-slot">Open — top billing on the site, banner, and stage.</p></div>
+        <div class="tier"><p class="tier-name">Gold</p><p class="tier-slot">Open — logo placement and a sponsor prize track.</p></div>
+        <div class="tier"><p class="tier-name">Silver</p><p class="tier-slot">Open — logo placement and swag in every bag.</p></div>
+        <div class="tier"><p class="tier-name">Bronze</p><p class="tier-slot">Open — logo placement on the site and Discord.</p></div>
+      </div>
+      <p class="note reveal">In-kind works too: API credits, software licenses, gift cards, and swag all count. <strong>Ask for the prospectus.</strong></p>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section section--mist">
+    <div class="wrap">
+      <div class="section-head section-head--right reveal">
+        <h2 class="title">Team</h2>
+        <p class="lede">Fintech is put together by high schoolers, for high schoolers.</p>
+      </div>
+      <div class="people">
+        <div class="person reveal"><p class="name">Koushik</p><p class="role">organizer</p></div>
+        <div class="person reveal"><p class="name">Navya</p><p class="role">role TBA</p></div>
+        <div class="person reveal"><p class="name">Ayaanah</p><p class="role">role TBA</p></div>
+        <div class="person reveal"><p class="name">Vivaan</p><p class="role">role TBA</p></div>
+      </div>
+      <p class="note reveal">Want to help organize? Email us with "team" in the subject line.</p>
+    </div>
+  </section>
+
+  <!-- FAQS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head section-head--right reveal">
+        <h2 class="title">FAQs</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>What is a hackathon?</summary>
+          <p>A day where teams build a project from scratch and demo it to judges at the end. You pick the idea, you write the code, and you have a hard deadline. Most people arrive without knowing what they'll make.</p>
+        </details>
+        <details>
+          <summary>Who can attend?</summary>
+          <p>Any high school student. You don't need to be part of DevFintech, and you don't need to be from a specific school.</p>
+        </details>
+        <details>
+          <summary>How big can teams be?</summary>
+          <p>Up to four people. You can register solo and get matched into a team at check-in — plenty of winning teams meet that morning.</p>
+        </details>
+        <details>
+          <summary>What should I bring?</summary>
+          <p>A laptop, a charger, a student ID, and a water bottle. If you're going for the hardware track, bring your own components.</p>
+        </details>
+        <details>
+          <summary>How much does it cost?</summary>
+          <p>Nothing. Entry is free and both meals are catered.</p>
+        </details>
+        <details>
+          <summary>Do I need to know how to code?</summary>
+          <p>No. There's a workshop right after opening, mentors on the floor all day, and every team needs someone who can design the thing and pitch it.</p>
+        </details>
+        <details>
+          <summary>What are the prizes?</summary>
+          <p>One winner per track plus an overall winner. Specific prizes are announced as sponsors lock in — register and you'll hear first.</p>
+        </details>
+        <details>
+          <summary>Is there a Discord?</summary>
+          <p>Yes. The invite is in your confirmation email, and that's where every announcement goes.</p>
+        </details>
+      </div>
+      <p class="note reveal">More questions? Shoot us an email: <a href="mailto:thedevfintech@gmail.com">thedevfintech@gmail.com</a></p>
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="wrap">
+      <div class="callout reveal">
+        <h2>Spots are limited.</h2>
+        <p>Registration takes about two minutes. Venue and Discord invite land in your inbox the moment they're set.</p>
+        <button class="btn btn--primary btn--lg" data-goto="signup">Sign up for Fintech →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= TAB 2 ================= -->
+<div class="panel" id="panel-signup" role="tabpanel" aria-labelledby="tab-signup" tabindex="-1" hidden>
+  <section class="section">
+    <div class="wrap">
+      <div class="signup-head reveal">
+        <p class="eyebrow">Registration</p>
+        <h2 class="title" style="letter-spacing:.16em;">Sign up</h2>
+        <p class="lede">Two minutes, no cost. Students and mentors both register here. We'll email you the venue and Discord invite as soon as they're locked.</p>
+      </div>
+      <div class="embed reveal">
+        <div class="embed-bar">
+          <span>Fintech · registration</span>
+          <a href="https://okoushiko.github.io/compound-signup/" target="_blank" rel="noopener">Open in a new tab ↗</a>
+        </div>
+        <iframe src="https://okoushiko.github.io/compound-signup/" title="Fintech hackathon registration form" loading="lazy"></iframe>
+      </div>
+      <p class="fallback reveal">Form not loading? <a href="https://okoushiko.github.io/compound-signup/" target="_blank" rel="noopener">Open the registration page directly</a>.</p>
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 class="title">Next</h2>
+        <p class="lede">What happens after you register.</p>
+      </div>
+      <div class="grid grid--3">
+        <div class="card reveal"><span class="num">01</span><h3>Confirmation email</h3><p>Lands right away. Join the Discord from that email — that's where every update goes.</p></div>
+        <div class="card reveal"><span class="num">02</span><h3>Venue</h3><p>Announced to registered participants first, with enough notice to plan your ride.</p></div>
+        <div class="card reveal"><span class="num">03</span><h3>Team matching</h3><p>If you registered solo and asked to be matched, we pair you up before check-in.</p></div>
+      </div>
+      <p class="note reveal">Under 18? Have a parent or guardian email handy — the form asks for it.</p>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="wrap footer-in">
+    <span class="org">Fintech · organized by DevFintech</span>
+    <span><a href="mailto:thedevfintech@gmail.com">thedevfintech@gmail.com</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  var tabs = {
+    info:   { btn: document.getElementById('tab-info'),   panel: document.getElementById('panel-info') },
+    signup: { btn: document.getElementById('tab-signup'), panel: document.getElementById('panel-signup') }
+  };
+
+  function show(name, push){
+    if(!tabs[name]) name = 'info';
+    Object.keys(tabs).forEach(function(k){
+      var on = (k === name);
+      tabs[k].btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      tabs[k].panel.hidden = !on;
+    });
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    reveal(tabs[name].panel);
+    if(push) history.replaceState(null, '', name === 'signup' ? '#signup' : '#top');
+  }
+
+  Object.keys(tabs).forEach(function(k){
+    tabs[k].btn.addEventListener('click', function(){ show(k, true); });
+  });
+  document.querySelectorAll('[data-goto]').forEach(function(el){
+    el.addEventListener('click', function(){ show(el.getAttribute('data-goto'), true); });
+  });
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var io = ('IntersectionObserver' in window) && !reduce
+    ? new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(!e.isIntersecting) return;
+          var sibs = e.target.parentElement
+            ? Array.prototype.filter.call(e.target.parentElement.children, function(c){ return c.classList.contains('reveal'); })
+            : [e.target];
+          var i = sibs.indexOf(e.target);
+          e.target.style.transitionDelay = (i > 0 ? Math.min(i, 5) * 80 : 0) + 'ms';
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 })
+    : null;
+
+  function reveal(scope){
+    (scope || document).querySelectorAll('.reveal').forEach(function(el){
+      if(!io){ el.classList.add('is-in'); return; }
+      el.classList.remove('is-in');
+      el.style.transitionDelay = '';
+      io.observe(el);
+    });
+  }
+
+  /* ---------- hero wave field ---------- */
+  /* 18 sine lines. Geometry varies per line; timing does not — every
+     line shares one duration and only the delay is offset, so they
+     travel as one wave instead of beating against each other. */
+  (function waves(){
+    var host = document.getElementById('waves');
+    if(!host) return;
+
+    var W = 1600, H = 620, LINES = 18, SVGNS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('preserveAspectRatio', 'none');
+
+    for(var i = 0; i < LINES; i++){
+      var t     = i / (LINES - 1);
+      var baseY = 40 + t * (H - 80);
+      var amp   = 12 + Math.sin(t * Math.PI) * 22;   // fattest in the middle
+      var wave  = 320 + t * 130;                     // wavelength drifts down the stack
+      var phase = t * Math.PI * 1.6;
+
+      var d = 'M0,' + baseY.toFixed(1);
+      for(var x = 20; x <= W * 2; x += 20){
+        var y = baseY + Math.sin((x / wave) + phase) * amp;
+        d += ' L' + x + ',' + y.toFixed(1);
+      }
+
+      var g = document.createElementNS(SVGNS, 'g');
+      g.setAttribute('class', 'wave-line');
+      g.style.animationDelay = (-i * 0.6).toFixed(2) + 's';
+
+      var p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', d);
+      p.setAttribute('stroke-width', (0.9 + Math.sin(t * Math.PI) * 0.8).toFixed(2));
+      p.setAttribute('stroke-opacity', (0.06 + Math.sin(t * Math.PI) * 0.16).toFixed(3));
+
+      g.appendChild(p);
+      svg.appendChild(g);
+    }
+    host.appendChild(svg);
+  })();
+
+  /* ---------- countdown ---------- */
+  /* Check-in, 08:00 Pacific on event day. -08:00 is PST in December. */
+  var EVENT     = new Date('2026-12-02T08:00:00-08:00');
+  var EVENT_END = new Date('2026-12-02T22:00:00-08:00');
+  /* Progress bar fills from the day registration opened to check-in. */
+  var OPENED    = new Date('2026-08-01T00:00:00-07:00');
+
+  var cd   = document.getElementById('countdown');
+  var msg  = document.getElementById('countdown-msg');
+  var fill = document.getElementById('progress-fill');
+  var out  = {}, last = {};
+
+  ['days','hours','mins','secs'].forEach(function(k){
+    out[k] = cd.querySelector('[data-cd="' + k + '"]');
+  });
+
+  function pad(n){ return n < 10 ? '0' + n : String(n); }
+
+  function set(k, val){
+    var el = out[k];
+    if(last[k] === val) return;
+    last[k] = val;
+    if(reduce){ el.textContent = val; return; }
+    el.classList.add('flip');
+    setTimeout(function(){
+      el.textContent = val;
+      el.classList.remove('flip');
+    }, 180);
+  }
+
+  function tick(){
+    var now = Date.now();
+    var left = EVENT - now;
+
+    if(left <= 0){
+      cd.classList.add('is-live');
+      msg.hidden = false;
+      msg.textContent = now < EVENT_END
+        ? 'Check-in is open. See you there.'
+        : "That's a wrap. Thanks for building with us.";
+      return false;
+    }
+
+    var s = Math.floor(left / 1000);
+    set('days',  String(Math.floor(s / 86400)));
+    set('hours', pad(Math.floor(s / 3600) % 24));
+    set('mins',  pad(Math.floor(s / 60) % 60));
+    set('secs',  pad(s % 60));
+
+    var pct = (now - OPENED) / (EVENT - OPENED) * 100;
+    fill.style.width = Math.max(0, Math.min(100, pct)).toFixed(2) + '%';
+    return true;
+  }
+
+  if(tick()){
+    var timer = setInterval(function(){
+      if(!tick()) clearInterval(timer);
+    }, 1000);
+  }
+
+  show(location.hash === '#signup' ? 'signup' : 'info', false);
+})();
+</script>
+</body>
+</html>
