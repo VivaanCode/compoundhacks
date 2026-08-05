@@ -561,9 +561,14 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 }
 .embed iframe::-webkit-scrollbar{ display:none; }
 .embed iframe{
-  display:block; width:100%; height:680px; border:0;
+  display:block; height:680px; border:0;
   background:var(--white); overflow:hidden;
   scrollbar-width:none;
+  /* Luma reserves a scrollbar gutter we can't reach across origins, so the
+     frame is run wider than its container and the strip is clipped off.
+     The negative margin re-centres what's left. */
+  width:calc(100% + 36px);
+  margin-left:-18px;
 }
 .fallback{ text-align:center; padding:22px 0 0; font-size:13.5px; color:var(--muted); }
 .register{
