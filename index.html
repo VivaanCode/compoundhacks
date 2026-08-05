@@ -547,23 +547,54 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 18%, #000 74%, transparent 100%);
   opacity:.9;
 }
-.embed{ position:relative; isolation:isolate; }
-/* soft mint halo so the card sits in the light instead of on a flat field */
+.embed{
+  position:relative; isolation:isolate;
+  max-width:620px; margin:0 auto;
+  border:1px solid var(--line); border-radius:22px; overflow:hidden;
+  background:var(--white);
+  box-shadow:0 30px 70px -44px rgba(0,0,0,.85);
+}
 .embed::before{
   content:''; position:absolute; inset:-40px; z-index:-1;
-  border-radius:40px; pointer-events:none;
-  background:radial-gradient(60% 60% at 50% 40%, rgba(102,174,135,.22) 0%, rgba(102,174,135,0) 70%);
+  border-radius:44px; pointer-events:none;
+  background:radial-gradient(60% 60% at 50% 40%, rgba(102,174,135,.2) 0%, rgba(102,174,135,0) 70%);
 }
-.embed{
-  border:1px solid var(--line); border-radius:20px; overflow:hidden;
-  background:var(--white); max-width:620px; margin:0 auto;
-  box-shadow:0 24px 60px -40px rgba(0,0,0,.7);
+.embed iframe{ display:block; width:100%; height:440px; border:0; background:var(--white); }
+.fallback{ text-align:center; padding:22px 0 0; font-size:13.5px; color:var(--muted); }
+.register{
+  position:relative; isolation:isolate; text-align:center; max-width:620px; margin:0 auto;
+  background:var(--white); border:1px solid var(--line);
+  border-radius:22px; padding:clamp(34px,5vw,54px);
+  box-shadow:0 30px 70px -44px rgba(0,0,0,.85);
 }
-.embed iframe{
-  display:block; width:100%; height:440px; border:0;
-  background:var(--white);
+.register::before{
+  content:''; position:absolute; inset:-40px; z-index:-1;
+  border-radius:44px; pointer-events:none;
+  background:radial-gradient(60% 60% at 50% 40%, rgba(102,174,135,.2) 0%, rgba(102,174,135,0) 70%);
 }
-.fallback{ text-align:center; padding:22px 0 0; font-size:14px; color:var(--muted); }
+.register-title{
+  font-family:var(--display); font-weight:800;
+  font-size:clamp(28px,3.8vw,44px); line-height:1.02;
+  letter-spacing:-.035em; color:var(--ink); margin:0 0 14px;
+}
+.register-title span{
+  color:var(--blue); text-shadow:0 0 20px rgba(102,174,135,.35);
+}
+.register-sub{ color:var(--muted); font-size:16px; max-width:42ch; margin:0 auto 30px; }
+.register-facts{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:4px; margin:0 0 30px; padding:22px 0;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.register-facts dt{
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:7px;
+}
+.register-facts dd{
+  margin:0; font-family:var(--display); font-weight:700;
+  font-size:15px; letter-spacing:-.015em; color:var(--ink);
+}
+.register-foot{ font-size:13.5px; color:var(--muted); margin:20px 0 0; }
 .signup-head{ text-align:center; max-width:640px; margin:0 auto clamp(32px,5vw,48px); }
 .signup-head .lede{ margin:14px auto 0; }
 
@@ -599,6 +630,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   .brand small{ display:none; }
   .header-in{ flex-direction:column; align-items:stretch; }
   .tabs{ justify-content:center; }
+  .register-facts{ grid-template-columns:1fr; gap:16px; }
   .embed iframe{ height:470px; }
 }
 
@@ -945,14 +977,29 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
         <h2 class="title">Sign up</h2>
         <p class="lede">Two minutes, no cost. Students and mentors both register right here. We'll email you the venue and Discord invite as soon as they're locked.</p>
       </div>
-      <div class="embed reveal">
+      <div class="embed reveal" id="embed">
         <iframe
+          id="luma-frame"
           src="https://luma.com/embed/event/evt-B2DG90hIYCXp0Ld/simple"
           title="Compound Hacks registration"
-          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
           allow="fullscreen; payment"></iframe>
       </div>
-      <p class="fallback reveal">Trouble registering? <a href="https://luma.com/q74q5lly" target="_blank" rel="noopener">Open the full event page on Luma</a></p>
+
+      <div class="register reveal" id="register-fallback" hidden>
+        <h3 class="register-title">Register for<br><span>Compound Hacks</span></h3>
+        <p class="register-sub">Registration is handled on Luma. Takes about two minutes, and the confirmation email lands straight away.</p>
+        <dl class="register-facts">
+          <div><dt>When</dt><dd>December 2, 2026</dd></div>
+          <div><dt>Where</dt><dd>Bay Area</dd></div>
+          <div><dt>Cost</dt><dd>Free</dd></div>
+        </dl>
+        <a class="btn btn--primary btn--lg" href="https://luma.com/q74q5lly"
+           target="_blank" rel="noopener">Register on Luma →</a>
+        <p class="register-foot">Opens in a new tab. You'll get a confirmation email and a calendar invite.</p>
+      </div>
+
+      <p class="fallback reveal">Form not showing? <a href="https://luma.com/q74q5lly" target="_blank" rel="noopener">Register on Luma directly</a></p>
     </div>
   </section>
 
@@ -1210,6 +1257,50 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
       if(e.key === 'Enter'){ e.preventDefault(); attempt(); }
       err.hidden = true;
     });
+  })();
+
+  /* ---------- registration embed with a real fallback ----------
+     Luma's embed refuses to frame over file:// and gets blocked by some
+     school networks and privacy extensions. A blocked frame still fires
+     onload, so timing alone can't detect it — instead we check whether
+     the frame ever produced a child browsing context. If it stays empty
+     we swap in the card, which always works. */
+  (function registration(){
+    var frame = document.getElementById('luma-frame'),
+        box   = document.getElementById('embed'),
+        card  = document.getElementById('register-fallback');
+    if(!frame || !box || !card) return;
+
+    var settled = false;
+    function useCard(){
+      if(settled) return;
+      settled = true;
+      box.hidden = true;
+      card.hidden = false;
+      if(io) io.observe(card);
+      card.classList.add('is-in');
+    }
+
+    /* file:// can never load it, so don't even wait */
+    if(location.protocol === 'file:'){ useCard(); return; }
+
+    frame.addEventListener('error', useCard);
+
+    setTimeout(function(){
+      if(settled) return;
+      var loaded = false;
+      try{
+        /* a framed page has its own browsing context; a refused one doesn't */
+        loaded = frame.contentWindow && frame.contentWindow.length >= 0;
+        if(frame.contentDocument &&
+           frame.contentDocument.location.href === 'about:blank'){ loaded = false; }
+      }catch(e){
+        /* SecurityError means a real cross-origin document is in there */
+        loaded = true;
+      }
+      if(!loaded) useCard();
+      else settled = true;
+    }, 2500);
   })();
 
   show(location.hash === '#signup' ? 'signup' : 'info', false);
