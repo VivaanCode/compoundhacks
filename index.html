@@ -21,17 +21,17 @@
    ============================================================ */
 
 :root{
-  --bg:#26418A;
-  --wave:#EFF6FF;      /* hero wave lines, lightest thing on the page */        /* page base, deepest navy */
-  --white:#33559F;     /* raised surfaces: cards, tiles, active tab */
-  --mist:#2C4A97;      /* alternating section bands */
-  --line:#5175C4;      /* every border and divider */
-  --blue:#BBD8F7;      /* accent, light enough to read on navy */
-  --blue-deep:#DFEEFD; /* hover — goes lighter on dark, not darker */
-  --blue-wash:#3A5CA8; /* tint fills */
-  --blue-solid:#3568CE;/* solid mid-blue for filled blocks */
-  --ink:#F2F7FF;       /* primary text */
-  --muted:#D8E7FA;     /* secondary text */
+  --bg:#18181B;
+  --wave:#6E7A73;      /* hero wave lines, lightest thing on the page */        /* page base, deepest navy */
+  --white:#232327;     /* raised surfaces: cards, tiles, active tab */
+  --mist:#1D1D21;      /* alternating section bands */
+  --line:#33333A;      /* every border and divider */
+  --blue:#66AE87;      /* accent, light enough to read on navy */
+  --blue-deep:#84C6A2; /* hover — goes lighter on dark, not darker */
+  --blue-wash:#20302A; /* tint fills */
+  --blue-solid:#66AE87;/* solid mid-blue for filled blocks */
+  --ink:#FFFFFF;       /* primary text */
+  --muted:#A1A1A9;     /* secondary text */
 
   --display:'Bricolage Grotesque', system-ui, sans-serif;
   --body:'Inter', system-ui, sans-serif;
@@ -59,10 +59,17 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 
 /* section title, letter-spaced like the deck */
 .title{
-  font-family:var(--display); font-weight:500;
-  font-size:clamp(30px,5.6vw,58px);
-  letter-spacing:.19em; text-transform:uppercase;
-  color:var(--blue); line-height:1.05; margin:0 0 16px;
+  font-family:var(--display); font-weight:700;
+  font-size:clamp(38px,6.2vw,76px);
+  letter-spacing:-.042em; line-height:.95;
+  color:var(--ink); margin:0 0 18px;
+}
+/* the mint full stop, same move as "money." in the hero */
+.title .dot{
+  color:var(--blue);
+  text-shadow:
+    0 0 14px rgba(102,174,135,.5),
+    0 0 34px rgba(102,174,135,.3);
 }
 .section-head{ margin-bottom:44px; }
 .section-head--right{ text-align:right; }
@@ -71,7 +78,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 /* ---------- header + tabs ---------- */
 .header{
   position:sticky; top:0; z-index:50;
-  background:rgba(38,65,138,.86); backdrop-filter:blur(12px);
+  background:rgba(24,24,27,.86); backdrop-filter:blur(12px);
   border-bottom:1px solid var(--line);
 }
 .header-in{
@@ -104,14 +111,36 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 .tab:hover{ color:var(--ink); }
 .tab[aria-selected="true"]{
   background:var(--white); color:var(--ink);
-  box-shadow:0 1px 3px rgba(4,12,38,.4);
+  box-shadow:0 1px 3px rgba(0,0,0,.5);
 }
 
 /* ---------- layout ---------- */
 .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
 .panel[hidden]{ display:none; }
-.section{ padding:clamp(60px,8vw,104px) 0; }
+.section{ position:relative; padding:clamp(60px,8vw,104px) 0; }
 .section--mist{ background:var(--mist); border-block:1px solid var(--line); }
+
+/* A mint bloom sits in every section, parked somewhere different each
+   time so the eye keeps moving down the page instead of tracking one
+   fixed corner. Same light as the glow on "money." in the hero. */
+.section::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(
+    var(--bloom-w, 70%) var(--bloom-h, 55%) at var(--bx, 50%) var(--by, 0%),
+    rgba(102,174,135,.085) 0%, rgba(102,174,135,0) 62%);
+}
+.section > .wrap{ position:relative; z-index:1; }
+
+/* one position per section, walking around the page */
+.panel .section:nth-of-type(2){ --bx:10%;  --by:0%;   }   /* tracks   — top left    */
+.panel .section:nth-of-type(3){ --bx:88%;  --by:14%;  }   /* schedule — upper right */
+.panel .section:nth-of-type(4){ --bx:50%;  --by:100%; }   /* judges   — bottom mid  */
+.panel .section:nth-of-type(5){ --bx:6%;   --by:88%;  }   /* sponsors — lower left  */
+.panel .section:nth-of-type(6){ --bx:94%;  --by:80%;  }   /* team     — lower right */
+.panel .section:nth-of-type(7){ --bx:34%;  --by:0%;   }   /* faqs     — top third   */
+.panel .section:nth-of-type(8){ --bx:72%;  --by:100%; --bloom-w:85%; }  /* cta */
+#panel-signup .section:nth-of-type(1){ --bx:82%; --by:6%;  }
+#panel-signup .section:nth-of-type(2){ --bx:16%; --by:92%; }
 
 /* ---------- hero ---------- */
 .hero{ position:relative; overflow:hidden; padding:clamp(56px,8vw,96px) 0 clamp(48px,7vw,84px); }
@@ -125,7 +154,13 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   font-size:clamp(56px,11vw,126px); line-height:.92;
   letter-spacing:-.038em; font-weight:800; margin:0 0 28px;
 }
-.hero h1 em{ font-style:normal; color:var(--blue); }
+.hero h1 em{
+  font-style:normal; color:var(--blue);
+  text-shadow:
+    0 0 18px rgba(102,174,135,.55),
+    0 0 46px rgba(102,174,135,.35),
+    0 0 90px rgba(102,174,135,.22);
+}
 .hero .lede{
   font-size:clamp(17px,1.7vw,20px); line-height:1.55;
   max-width:46ch; color:var(--muted);
@@ -155,7 +190,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 .cta-row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
 
 /* section titles rise out of a mask when scrolled to */
-.title.mask{ overflow:hidden; padding-bottom:.22em; margin-bottom:-.12em; }
+.title.mask{ overflow:hidden; padding-bottom:.24em; margin-bottom:-.16em; }
 .title .ti{
   display:inline-block; transform:translateY(108%);
   transition:transform .85s cubic-bezier(.19,1,.22,1) .1s;
@@ -182,8 +217,8 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   position:absolute; inset:0;
   z-index:0; pointer-events:none; overflow:hidden;
   background:
-    radial-gradient(120% 80% at 78% 18%, rgba(96,140,220,.45) 0%, rgba(96,140,220,0) 62%),
-    radial-gradient(90% 70% at 8% 90%, rgba(200,225,255,.20) 0%, rgba(200,225,255,0) 60%);
+    radial-gradient(120% 80% at 78% 18%, rgba(102,174,135,.14) 0%, rgba(102,174,135,0) 62%),
+    radial-gradient(90% 70% at 8% 90%, rgba(160,180,170,.07) 0%, rgba(160,180,170,0) 60%);
   mask-image:linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
   -webkit-mask-image:linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
 }
@@ -195,11 +230,11 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 /* ---------- countdown ---------- */
 .countdown{
   position:relative; z-index:1;
-  background:rgba(51,85,159,.72);
+  background:rgba(35,35,39,.72);
   backdrop-filter:blur(10px);
   border:1px solid var(--line); border-radius:20px;
   padding:22px 22px 16px;
-  box-shadow:0 26px 60px -34px rgba(4,12,38,.8);
+  box-shadow:0 26px 60px -34px rgba(0,0,0,.75);
 }
 .countdown-top{
   display:flex; justify-content:space-between; align-items:baseline; gap:12px;
@@ -216,7 +251,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   display:flex; flex-direction:column; align-items:center;
   transition:border-color .25s ease;
 }
-.unit:hover{ border-color:#7E9BE0; }
+.unit:hover{ border-color:#4C6E5B; }
 .digits{
   font-family:var(--mono); font-weight:500;
   font-size:clamp(26px,3.6vw,40px); line-height:1;
@@ -260,8 +295,8 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 .card:hover{
-  transform:translateY(-3px); border-color:#7E9BE0;
-  box-shadow:0 18px 40px -30px rgba(4,12,38,.7);
+  transform:translateY(-3px); border-color:#4C6E5B;
+  box-shadow:0 18px 40px -30px rgba(0,0,0,.65);
 }
 .card .num{
   font-family:var(--mono); font-size:12px; color:var(--blue);
@@ -271,40 +306,111 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 .card p{ margin:0; color:var(--muted); font-size:15px; }
 .card--track h3{ font-size:22px; color:var(--blue); }
 
+/* ---------- tracks ---------- */
+.tracks{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.track{
+  position:relative; overflow:hidden;
+  background:var(--white); border:1px solid var(--line);
+  border-radius:18px; padding:30px 28px 26px;
+  display:flex; flex-direction:column;
+  transition:transform .3s cubic-bezier(.19,1,.22,1), border-color .3s ease;
+}
+.track:hover{ transform:translateY(-4px); border-color:var(--blue); }
+.track-num{
+  position:absolute; top:14px; right:20px;
+  font-family:var(--mono); font-size:clamp(52px,6vw,74px);
+  line-height:1; color:var(--ink); opacity:.05;
+  letter-spacing:-.04em; pointer-events:none;
+}
+.track-name{
+  font-family:var(--display); font-weight:700;
+  font-size:clamp(30px,3.4vw,42px); line-height:.98;
+  letter-spacing:-.035em; color:var(--ink);
+  margin:0 0 16px; position:relative;
+}
+.track:hover .track-name{ color:var(--blue); }
+.track-name{ transition:color .3s ease; }
+.track-desc{ margin:0 0 20px; color:var(--muted); font-size:15.5px; flex:1 1 auto; }
+.track-tags{ display:flex; flex-wrap:wrap; gap:6px; list-style:none; margin:0 0 20px; padding:0; }
+.track-tags li{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--blue);
+  background:var(--blue-wash); border-radius:6px; padding:5px 9px;
+}
+.track-foot{
+  margin:0; padding-top:16px; border-top:1px solid var(--line);
+  font-size:13.5px; color:var(--muted);
+}
+.track-foot span{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink); display:block; margin-bottom:4px;
+}
+
 /* ---------- schedule ---------- */
-.sched{
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:0 clamp(32px,6vw,72px);
+.rail{ list-style:none; margin:0; padding:0; position:relative; }
+.rail::before{
+  content:''; position:absolute; left:0; top:14px; bottom:14px;
+  width:1px; background:var(--line);
 }
-.sched-col{ list-style:none; margin:0; padding:0; }
-.slot{
-  display:grid; grid-template-columns:76px 1fr; gap:20px;
-  padding:20px 0; border-top:1px solid var(--line);
+.stop{
+  position:relative;
+  display:grid; grid-template-columns:112px 1fr auto;
+  gap:clamp(16px,3vw,36px); align-items:start;
+  padding:26px 0 26px 34px;
 }
-.sched-col:last-child .slot:last-child,
-.sched-col:first-child .slot:last-child{ border-bottom:1px solid var(--line); }
-.slot .time{
-  font-family:var(--mono); font-size:15px; font-weight:500;
-  color:var(--blue); padding-top:3px;
+.stop::before{
+  content:''; position:absolute; left:-4px; top:34px;
+  width:9px; height:9px; border-radius:50%;
+  background:var(--mist); border:1.5px solid var(--line);
+  transition:background-color .25s ease, border-color .25s ease;
 }
-.slot h3{ margin-bottom:5px; }
-.slot p{ margin:0; color:var(--muted); font-size:15px; }
+.stop:hover::before{ background:var(--blue); border-color:var(--blue); }
+.stop--mark::before{ background:var(--blue); border-color:var(--blue); }
+.stop + .stop{ border-top:1px solid var(--line); }
+.stop-time{
+  font-family:var(--mono); font-weight:500;
+  font-size:clamp(22px,2.4vw,30px); line-height:1;
+  letter-spacing:-.03em; color:var(--ink);
+  font-variant-numeric:tabular-nums; padding-top:2px;
+}
+.stop--mark .stop-time{ color:var(--blue); }
+.stop-body h3{
+  font-size:clamp(19px,2vw,24px); margin:0 0 6px; letter-spacing:-.02em;
+}
+.stop-body p{ margin:0; color:var(--muted); font-size:15.5px; max-width:56ch; }
+.stop-tag{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+  border:1px solid var(--line); border-radius:999px;
+  padding:5px 11px; white-space:nowrap; margin-top:4px;
+}
+.stop-tag--on{ color:var(--blue); border-color:var(--blue); }
 
 /* ---------- tiers / people ---------- */
 .tier{ padding:22px 0; border-top:1px solid var(--line); }
 .tier:last-of-type{ border-bottom:1px solid var(--line); }
 .tier-name{
-  font-family:var(--mono); font-size:12px; letter-spacing:.12em;
-  text-transform:uppercase; color:var(--ink); margin:0 0 8px;
+  font-family:var(--display); font-weight:700; font-size:clamp(20px,2vw,26px);
+  letter-spacing:-.025em; color:var(--ink); margin:0 0 6px;
 }
+.tier:hover .tier-name{ color:var(--blue); }
+.tier-name{ transition:color .25s ease; }
 .tier-slot{ color:var(--muted); font-size:15px; margin:0; }
 
 .people{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
 .person{
+  position:relative; overflow:hidden;
   background:var(--white); border:1px solid var(--line);
-  border-radius:var(--r); padding:20px;
+  border-radius:var(--r); padding:20px 20px 20px 24px;
+  transition:border-color .25s ease, transform .25s ease;
 }
-.person .name{ font-family:var(--display); font-weight:600; font-size:16px; margin:0 0 3px; }
+.person::before{
+  content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+  background:var(--blue); opacity:.35; transition:opacity .25s ease;
+}
+.person:hover{ border-color:var(--blue); transform:translateY(-2px); }
+.person:hover::before{ opacity:1; }
+.person .name{ font-family:var(--display); font-weight:700; font-size:18px; letter-spacing:-.02em; margin:0 0 4px; }
 .person .role{ font-family:var(--mono); font-size:12px; color:var(--muted); margin:0; letter-spacing:.03em; }
 
 .note{
@@ -317,9 +423,13 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 .faq details{ border-bottom:1px solid var(--line); }
 .faq summary{
   cursor:pointer; list-style:none;
-  font-family:var(--display); font-weight:500; font-size:17px;
-  padding:20px 40px 20px 0; position:relative;
+  font-family:var(--display); font-weight:600; font-size:clamp(18px,1.7vw,21px);
+  letter-spacing:-.02em;
+  padding:22px 44px 22px 0; position:relative;
+  transition:color .2s ease;
 }
+.faq summary:hover{ color:var(--blue); }
+.faq details[open] summary{ color:var(--blue); }
 .faq summary::-webkit-details-marker{ display:none; }
 .faq summary::after{
   content:'+'; position:absolute; right:6px; top:18px;
@@ -334,17 +444,17 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   background:var(--blue-solid); border-radius:var(--r);
   padding:clamp(32px,5vw,52px); color:#fff; text-align:center;
 }
-.callout h2{ color:#fff; margin-bottom:12px; font-size:clamp(28px,4.2vw,40px); }
-.callout p{ color:rgba(255,255,255,.82); max-width:50ch; margin:0 auto 26px; }
-.callout .btn--primary{ background:#fff; color:var(--blue-solid); }
-.callout .btn--primary:hover{ background:#DCE9FB; color:var(--blue-solid); }
+.callout h2{ color:var(--bg); margin-bottom:12px; font-size:clamp(28px,4.2vw,40px); }
+.callout p{ color:rgba(24,24,27,.72); max-width:50ch; margin:0 auto 26px; }
+.callout .btn--primary{ background:var(--bg); color:var(--blue); }
+.callout .btn--primary:hover{ background:#000; color:var(--blue-deep); }
 
 /* ---------- signup ---------- */
 .signup-head{ text-align:center; max-width:640px; margin:0 auto clamp(32px,5vw,48px); }
 .signup-head .lede{ margin:14px auto 0; }
 .embed{
   border:1px solid var(--line); border-radius:var(--r); overflow:hidden;
-  background:var(--white); box-shadow:0 24px 60px -40px rgba(4,12,38,.75);
+  background:var(--white); box-shadow:0 24px 60px -40px rgba(0,0,0,.7);
 }
 .embed-bar{
   display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -372,14 +482,16 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 /* ---------- responsive ---------- */
 @media (max-width:900px){
   .hero-grid{ grid-template-columns:1fr; }
-  .sched{ grid-template-columns:1fr; }
+  .tracks{ grid-template-columns:1fr; }
   .people{ grid-template-columns:repeat(2,1fr); }
+  .stop{ grid-template-columns:92px 1fr; }
+  .stop-tag{ grid-column:2; justify-self:start; margin-top:12px; }
 }
 @media (max-width:640px){
   body{ font-size:16px; }
   .grid--3{ grid-template-columns:1fr; }
   .people{ grid-template-columns:1fr; }
-  .title{ letter-spacing:.14em; }
+  .title{ letter-spacing:-.035em; }
   .section-head--right{ text-align:left; }
   .section-head--right .lede{ margin-left:0; }
   .brand small{ display:none; }
@@ -457,22 +569,42 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
     <div class="wrap">
       <div class="section-head reveal">
         <h2 class="title">Tracks</h2>
-        <p class="lede">Three tracks. Three winners. All tracks compete for overall winner. There will still be a theme, which is revealed during opening.</p>
+        <p class="lede">Three tracks. Three winners. Every team also competes for overall, so there's nothing to opt into. A theme drops at opening and applies to all three.</p>
       </div>
-      <div class="grid grid--3">
-        <div class="card card--track reveal">
-          <h3>Best AI/ML</h3>
-          <p>Anything built on a model — an LLM, a classifier, something you trained yourself. A chatbot that explains a credit score counts. So does a model that reads market data.</p>
-        </div>
-        <div class="card card--track reveal">
-          <h3>Best Hardware</h3>
-          <p>For the hardware people who show up to every hackathon with a bin of parts. Arduino, Pi, sensors, anything physical. Bring your own components.</p>
-        </div>
-        <div class="card card--track reveal">
-          <h3>Best Funny/Cursed</h3>
-          <p>The project that shouldn't exist but does. Technically impressive, deeply unnecessary. Judged on how hard the room laughs.</p>
-        </div>
+
+      <div class="tracks">
+        <article class="track reveal">
+          <span class="track-num">01</span>
+          <h3 class="track-name">Best<br>AI/ML</h3>
+          <p class="track-desc">Anything built on a model — an LLM, a classifier, something you trained yourself. A chatbot that explains a credit score counts. So does a model that reads market data.</p>
+          <ul class="track-tags">
+            <li>LLMs</li><li>Classifiers</li><li>Agents</li>
+          </ul>
+          <p class="track-foot"><span>Judged on</span> how well the model actually does the job</p>
+        </article>
+
+        <article class="track reveal">
+          <span class="track-num">02</span>
+          <h3 class="track-name">Best<br>Hardware</h3>
+          <p class="track-desc">For the people who show up with a bin of parts. Arduino, Pi, sensors, anything physical that reads or reacts to money moving. Bring your own components.</p>
+          <ul class="track-tags">
+            <li>Arduino</li><li>Raspberry Pi</li><li>Sensors</li>
+          </ul>
+          <p class="track-foot"><span>Judged on</span> whether it works in front of the judges</p>
+        </article>
+
+        <article class="track reveal">
+          <span class="track-num">03</span>
+          <h3 class="track-name">Best<br>Funny/Cursed</h3>
+          <p class="track-desc">The project that shouldn't exist but does. Technically impressive, deeply unnecessary. A budgeting app that insults you. A stock picker driven by a goldfish.</p>
+          <ul class="track-tags">
+            <li>Chaos</li><li>Bad ideas</li><li>Executed well</li>
+          </ul>
+          <p class="track-foot"><span>Judged on</span> how hard the room laughs</p>
+        </article>
       </div>
+
+      <p class="note reveal">Not sure which one you're going for? Build first, pick later — you declare your track when you submit.</p>
     </div>
   </section>
 
@@ -481,46 +613,83 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
     <div class="wrap">
       <div class="section-head section-head--right reveal">
         <h2 class="title">Schedule</h2>
-        <p class="lede">One day, start to finish. December 2, 2026.</p>
+        <p class="lede">One day, start to finish. December 2, 2026. Fourteen hours from the first badge to the last prize.</p>
       </div>
-      <div class="sched">
-        <ul class="sched-col">
-          <li class="slot reveal">
-            <span class="time">8:00</span>
-            <div><h3>Check-in begins</h3><p>Grab your swag and badge, find a table, get warmed up with your team, grab a breakfast snack.</p></div>
-          </li>
-          <li class="slot reveal">
-            <span class="time">9:00</span>
-            <div><h3>Opening</h3><p>The opening presentation, sponsor keynotes, theme announcement.</p></div>
-          </li>
-          <li class="slot reveal">
-            <span class="time">9:30</span>
-            <div><h3>Workshop</h3><p>The world-famous How To Win A Hackathon workshop.</p></div>
-          </li>
-          <li class="slot reveal">
-            <span class="time">12:00</span>
-            <div><h3>Lunch</h3><p>Have a break, let your brain rest, and recharge with a fully catered meal.</p></div>
-          </li>
-        </ul>
-        <ul class="sched-col">
-          <li class="slot reveal">
-            <span class="time">13:00</span>
-            <div><h3>Workshop</h3><p>Second workshop of the day. Speaker and topic announced closer to the event.</p></div>
-          </li>
-          <li class="slot reveal">
-            <span class="time">18:00</span>
-            <div><h3>Dinner</h3><p>Catered dinner, because by this point everyone is hungry.</p></div>
-          </li>
-          <li class="slot reveal">
-            <span class="time">20:00</span>
-            <div><h3>Hacking ends</h3><p>Submit your projects and start preparing for judging, which commences immediately.</p></div>
-          </li>
-          <li class="slot reveal">
-            <span class="time">22:00</span>
-            <div><h3>Closing &amp; prizes</h3><p>Find out who won, collect prizes, and then we send everyone home.</p></div>
-          </li>
-        </ul>
-      </div>
+
+      <ol class="rail">
+        <li class="stop reveal">
+          <span class="stop-time">08:00</span>
+          <div class="stop-body">
+            <h3>Check-in begins</h3>
+            <p>Grab your swag and badge, find a table, get warmed up with your team, grab a breakfast snack.</p>
+          </div>
+          <span class="stop-tag">1 hr</span>
+        </li>
+        <li class="stop reveal">
+          <span class="stop-time">09:00</span>
+          <div class="stop-body">
+            <h3>Opening</h3>
+            <p>The opening presentation, sponsor keynotes, and the theme announcement. Don't be late for this one — everything after depends on it.</p>
+          </div>
+          <span class="stop-tag">30 min</span>
+        </li>
+        <li class="stop reveal">
+          <span class="stop-time">09:30</span>
+          <div class="stop-body">
+            <h3>Workshop</h3>
+            <p>The world-famous How To Win A Hackathon workshop. Worth sitting through even if you've done this before.</p>
+          </div>
+          <span class="stop-tag">30 min</span>
+        </li>
+        <li class="stop stop--mark reveal">
+          <span class="stop-time">10:00</span>
+          <div class="stop-body">
+            <h3>Hacking starts</h3>
+            <p>Ten hours on the clock. Mentors are on the floor from here until submissions close.</p>
+          </div>
+          <span class="stop-tag stop-tag--on">10 hrs</span>
+        </li>
+        <li class="stop reveal">
+          <span class="stop-time">12:00</span>
+          <div class="stop-body">
+            <h3>Lunch</h3>
+            <p>Have a break, let your brain rest, and recharge with a fully catered meal.</p>
+          </div>
+          <span class="stop-tag">1 hr</span>
+        </li>
+        <li class="stop reveal">
+          <span class="stop-time">13:00</span>
+          <div class="stop-body">
+            <h3>Workshop</h3>
+            <p>Second workshop of the day. Speaker and topic announced closer to the event.</p>
+          </div>
+          <span class="stop-tag">45 min</span>
+        </li>
+        <li class="stop reveal">
+          <span class="stop-time">18:00</span>
+          <div class="stop-body">
+            <h3>Dinner</h3>
+            <p>Catered dinner, because by this point everyone is hungry.</p>
+          </div>
+          <span class="stop-tag">1 hr</span>
+        </li>
+        <li class="stop stop--mark reveal">
+          <span class="stop-time">20:00</span>
+          <div class="stop-body">
+            <h3>Hacking ends</h3>
+            <p>Hard cutoff. Submit your project and start preparing for judging, which commences immediately.</p>
+          </div>
+          <span class="stop-tag stop-tag--on">deadline</span>
+        </li>
+        <li class="stop reveal">
+          <span class="stop-time">22:00</span>
+          <div class="stop-body">
+            <h3>Closing &amp; prizes</h3>
+            <p>Find out who won, collect prizes, and then we send everyone home.</p>
+          </div>
+          <span class="stop-tag">1 hr</span>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -732,6 +901,12 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
     var span = document.createElement('span');
     span.className = 'ti';
     span.textContent = el.textContent;
+
+    var dot = document.createElement('span');
+    dot.className = 'dot';
+    dot.textContent = '.';
+    span.appendChild(dot);
+
     el.textContent = '';
     el.appendChild(span);
     el.classList.add('mask');
