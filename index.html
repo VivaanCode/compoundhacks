@@ -321,15 +321,49 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   pointer-events:none; user-select:none;
   transform:scale(.995);
 }
-.vault.is-open .vault-inner{
-  filter:none; opacity:1; pointer-events:auto; user-select:auto;
-  transform:none;
-}
-.vault.is-open .track{
+/* Unlocking does not un-blur the decoy, it removes it. The cards behind
+   the glass are skeleton shapes with no text in them, so there is nothing
+   to read in the source and nothing to recover by killing the filter in
+   devtools. */
+.vault.is-open .vault-inner{ display:none; }
+.vault.is-open .vault-prize{
+  display:block;
   opacity:0; animation:liftIn .7s cubic-bezier(.19,1,.22,1) forwards;
 }
-.vault.is-open .track:nth-child(2){ animation-delay:.09s; }
-.vault.is-open .track:nth-child(3){ animation-delay:.18s; }
+
+/* ---------- decoy cards behind the glass ---------- */
+.track--ghost{ pointer-events:none; }
+.track--ghost:hover{ transform:none; border-color:var(--line); }
+.ghost-num{
+  position:absolute; top:14px; right:20px;
+  font-family:var(--mono); font-size:clamp(52px,6vw,74px);
+  line-height:1; color:var(--ink); opacity:.05; letter-spacing:-.04em;
+}
+.gl{
+  display:block; border-radius:6px; margin-bottom:9px;
+  background:linear-gradient(90deg, rgba(232,232,236,.17), rgba(232,232,236,.06));
+}
+.gl--title{ height:30px; border-radius:8px; margin-bottom:11px; background:linear-gradient(90deg, rgba(232,232,236,.30), rgba(232,232,236,.13)); }
+.gl--line{ height:11px; width:100%; }
+.gl--tag{ height:20px; border-radius:6px; margin:0; background:rgba(102,174,135,.20); }
+.gl--kicker{ height:9px; width:74px; margin-bottom:10px; }
+.ghost-tags{ display:flex; gap:6px; margin-bottom:20px; }
+.ghost-foot{ display:block; padding-top:16px; border-top:1px solid var(--line); }
+
+/* ---------- what is actually behind the lock ---------- */
+.vault-prize{
+  display:none; text-align:center;
+  border:1px solid var(--line); border-radius:20px;
+  padding:clamp(60px,9vw,112px) 28px;
+  background:
+    radial-gradient(70% 70% at 50% 40%, rgba(102,174,135,.13) 0%, rgba(102,174,135,0) 70%),
+    var(--white);
+}
+.prize-title{
+  font-family:var(--display); font-weight:800;
+  font-size:clamp(36px,6vw,74px); line-height:.95; letter-spacing:-.045em;
+  color:var(--ink); margin:0;
+}
 
 .vault-cover{
   position:absolute; inset:-1px;
@@ -343,9 +377,13 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 }
 .vault.is-open .vault-cover{ display:none; }
 
+/* flex:none matters. The cover is a centred flex column, so once the
+   password form opens and the content is taller than the box, the button
+   is the flexible thing and gets squashed vertically into an oval. */
 .vault-lock{
   appearance:none; cursor:pointer;
-  width:74px; height:74px; border-radius:50%;
+  flex:0 0 auto;
+  width:74px; height:74px; min-height:74px; border-radius:50%;
   display:grid; place-items:center;
   background:var(--blue-wash); color:var(--blue);
   border:1px solid var(--blue);
@@ -354,6 +392,8 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 }
 .vault-lock:hover{ transform:translateY(-3px) scale(1.04); background:#26402F; }
 .vault-lock:active{ transform:translateY(0) scale(.98); }
+.vault-lock svg{ display:block; }
+.vault-title, .vault-sub, .vault-form{ flex:0 0 auto; }
 
 .vault-title{
   font-family:var(--display); font-weight:800;
@@ -662,7 +702,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   .hero-title .line-in,
   .title .ti{ transform:none !important; }
   .hero-lede, .hero-cta{ opacity:1; transform:none; }
-  .vault.is-open .track{ opacity:1; animation:none; }
+  .vault.is-open .vault-prize{ opacity:1; animation:none; }
   .vault-row.shake{ animation:none; }
 }
 </style>
@@ -724,35 +764,66 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 
       <div class="vault" id="vault">
         <div class="tracks vault-inner" aria-hidden="true">
-        <article class="track reveal">
-          <span class="track-num">01</span>
-          <h3 class="track-name">Best<br>AI/ML</h3>
-          <p class="track-desc">Anything built on a model, an LLM, a classifier, something you trained yourself. A chatbot that explains a credit score counts. So does a model that reads market data.</p>
-          <ul class="track-tags">
-            <li>LLMs</li><li>Classifiers</li><li>Agents</li>
-          </ul>
-          <p class="track-foot"><span>Judged on</span> how well the model actually does the job</p>
-        </article>
+          <article class="track track--ghost">
+            <span class="ghost-num">01</span>
+            <span class="gl gl--title" style="width:58%"></span>
+            <span class="gl gl--title" style="width:42%;margin-bottom:20px"></span>
+            <span class="gl gl--line"></span>
+            <span class="gl gl--line" style="width:92%"></span>
+            <span class="gl gl--line" style="width:97%"></span>
+            <span class="gl gl--line" style="width:64%;margin-bottom:22px"></span>
+            <span class="ghost-tags">
+              <span class="gl gl--tag" style="width:46px"></span>
+              <span class="gl gl--tag" style="width:68px"></span>
+              <span class="gl gl--tag" style="width:54px"></span>
+            </span>
+            <span class="ghost-foot">
+              <span class="gl gl--kicker"></span>
+              <span class="gl gl--line" style="width:84%;margin:0"></span>
+            </span>
+          </article>
 
-        <article class="track reveal">
-          <span class="track-num">02</span>
-          <h3 class="track-name">Best<br>Hardware</h3>
-          <p class="track-desc">For the people who show up with a bin of parts. Arduino, Pi, sensors, anything physical that reads or reacts to money moving. Bring your own components.</p>
-          <ul class="track-tags">
-            <li>Arduino</li><li>Raspberry Pi</li><li>Sensors</li>
-          </ul>
-          <p class="track-foot"><span>Judged on</span> whether it works in front of the judges</p>
-        </article>
+          <article class="track track--ghost">
+            <span class="ghost-num">02</span>
+            <span class="gl gl--title" style="width:52%"></span>
+            <span class="gl gl--title" style="width:66%;margin-bottom:20px"></span>
+            <span class="gl gl--line"></span>
+            <span class="gl gl--line" style="width:96%"></span>
+            <span class="gl gl--line" style="width:88%"></span>
+            <span class="gl gl--line" style="width:71%;margin-bottom:22px"></span>
+            <span class="ghost-tags">
+              <span class="gl gl--tag" style="width:58px"></span>
+              <span class="gl gl--tag" style="width:82px"></span>
+              <span class="gl gl--tag" style="width:49px"></span>
+            </span>
+            <span class="ghost-foot">
+              <span class="gl gl--kicker"></span>
+              <span class="gl gl--line" style="width:76%;margin:0"></span>
+            </span>
+          </article>
 
-        <article class="track reveal">
-          <span class="track-num">03</span>
-          <h3 class="track-name">Best<br>Funny/Cursed</h3>
-          <p class="track-desc">The project that shouldn't exist but does. Technically impressive, deeply unnecessary. A budgeting app that insults you. A stock picker driven by a goldfish.</p>
-          <ul class="track-tags">
-            <li>Chaos</li><li>Bad ideas</li><li>Executed well</li>
-          </ul>
-          <p class="track-foot"><span>Judged on</span> how hard the room laughs</p>
-        </article>
+          <article class="track track--ghost">
+            <span class="ghost-num">03</span>
+            <span class="gl gl--title" style="width:61%"></span>
+            <span class="gl gl--title" style="width:79%;margin-bottom:20px"></span>
+            <span class="gl gl--line"></span>
+            <span class="gl gl--line" style="width:89%"></span>
+            <span class="gl gl--line" style="width:94%"></span>
+            <span class="gl gl--line" style="width:57%;margin-bottom:22px"></span>
+            <span class="ghost-tags">
+              <span class="gl gl--tag" style="width:51px"></span>
+              <span class="gl gl--tag" style="width:63px"></span>
+              <span class="gl gl--tag" style="width:74px"></span>
+            </span>
+            <span class="ghost-foot">
+              <span class="gl gl--kicker"></span>
+              <span class="gl gl--line" style="width:90%;margin:0"></span>
+            </span>
+          </article>
+        </div>
+
+        <div class="vault-prize" id="vault-prize" hidden>
+          <h3 class="prize-title">nice try lol</h3>
         </div>
 
         <div class="vault-cover" id="vault-cover">
@@ -769,7 +840,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
           </button>
 
           <p class="vault-title">Tracks are locked</p>
-          <p class="vault-sub">They unlock with a password announced during the opening presentation, 09:00 on the day of the hackathon.</p>
+          <p class="vault-sub">They unlock with a password announced during the opening presentation, 08:45 on the day of the hackathon.</p>
 
           <div class="vault-form" id="vault-form" hidden>
             <label for="vault-pass">Enter password</label>
@@ -898,10 +969,10 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
         <p class="lede">Compound Hacks is put together by high schoolers, for high schoolers.</p>
       </div>
       <div class="people">
-        <div class="person reveal"><p class="name">Koushik</p><p class="role">organizer/Developer</p></div>
-        <div class="person reveal"><p class="name">Sai</p><p class="role">Co-Out Reach</p></div>
-        <div class="person reveal"><p class="name">Ayannah</p><p class="role">Organizer/Out Reach</p></div>
-        <div class="person reveal"><p class="name">Vivaan</p><p class="role">Co-Developer</p></div>
+        <div class="person reveal"><p class="name">Koushik</p><p class="role">organizer</p></div>
+        <div class="person reveal"><p class="name">Navya</p><p class="role">role TBA</p></div>
+        <div class="person reveal"><p class="name">Ayannah</p><p class="role">role TBA</p></div>
+        <div class="person reveal"><p class="name">Vivaan</p><p class="role">role TBA</p></div>
       </div>
       <p class="note reveal">Want to help organize? Email us with "team" in the subject line.</p>
     </div>
@@ -928,7 +999,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
         </details>
         <details>
           <summary>What should I bring?</summary>
-          <p>A laptop, a charger, a student ID, and a water bottle. If you're going for the hardware track, bring your own components.</p>
+          <p>A laptop, a charger, a student ID, and a water bottle. If you're planning on building anything physical, bring your own components.</p>
         </details>
         <details>
           <summary>How much does it cost?</summary>
@@ -1214,9 +1285,8 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   }
 
   /* ---------- locked tracks ---------- */
-  /* Change TRACK_PASSWORD to whatever you announce at opening. This is a
-     reveal, not security, anyone can read it in the page source, so keep
-     nothing behind it that would actually hurt to leak. */
+  /* Anyone can read this in the page source. That is fine, because what
+     it opens is a joke panel, not the tracks. Nothing real is gated. */
   var TRACK_PASSWORD = 'k7m2xq9v4b';
 
   (function vault(){
@@ -1226,8 +1296,9 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
         pass = document.getElementById('vault-pass'),
         go   = document.getElementById('vault-go'),
         err  = document.getElementById('vault-err'),
-        row  = form && form.querySelector('.vault-row'),
-        note = document.getElementById('tracks-note');
+        row   = form && form.querySelector('.vault-row'),
+        prize = document.getElementById('vault-prize'),
+        note  = document.getElementById('tracks-note');
     if(!box || !lock) return;
 
     lock.addEventListener('click', function(){
@@ -1240,9 +1311,9 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
     function attempt(){
       var v = (pass.value || '').trim().toLowerCase();
       if(v === TRACK_PASSWORD.toLowerCase()){
+        err.hidden = true;
+        if(prize) prize.hidden = false;
         box.classList.add('is-open');
-        box.querySelector('.vault-inner').removeAttribute('aria-hidden');
-        if(note) note.textContent = "Unlocked. Pick up to two tracks, you declare which ones when you submit.";
         return;
       }
       err.hidden = false;
