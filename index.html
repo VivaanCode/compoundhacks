@@ -211,8 +211,9 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 .btn--lg{ font-size:16px; padding:16px 30px; }
 
 /* ---------- hero wave field ----------
-   One shared duration, staggered delay only. Different durations per
-   line create beat frequencies and read as strobing. Transform only. */
+   One shared duration for every line. Different durations per line create
+   beat frequencies: the lines drift out of relationship and the field
+   degrades into noise. Transform only, no layout work. */
 .waves{
   position:absolute; inset:0;
   z-index:0; pointer-events:none; overflow:hidden;
@@ -224,7 +225,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
 }
 .waves svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 .waves path{ fill:none; stroke:var(--wave); vector-effect:non-scaling-stroke; }
-.wave-line{ animation:sway var(--dur, 22s) linear infinite; will-change:transform; }
+.wave-line{ animation:sway var(--dur, 26s) linear infinite; will-change:transform; }
 @keyframes sway{ from{ transform:translateX(0); } to{ transform:translateX(calc(var(--shift, 1600) * -1px)); } }
 
 /* ---------- countdown ---------- */
@@ -689,7 +690,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
           <span class="line"><span class="line-in">Build</span></span>
           <span class="line"><span class="line-in">with <em>money.</em></span></span>
         </h1>
-        <p class="lede hero-lede">A one-day hackathon for Bay Area high schoolers. Show up at 8, form a team, build something that touches money, and pitch it to judges by 20:00. Free to enter, food included, no experience needed.</p>
+        <p class="lede hero-lede">A one-day hackathon for Bay Area high schoolers. Show up at 8, form a team, build something that touches money, and pitch it to judges by 17:30. Free to enter, food included, no experience needed.</p>
         <div class="cta-row hero-cta">
           <button class="btn btn--primary btn--lg" data-goto="signup">Sign up →</button>
           <a class="btn btn--ghost btn--lg" href="#tracks">See the tracks</a>
@@ -708,7 +709,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
         </div>
         <p class="countdown-msg" id="countdown-msg" hidden>Check-in is open. See you there.</p>
         <div class="progress"><span class="progress-fill" id="progress-fill"></span></div>
-        <div class="countdown-foot"><span>08:00 check-in</span><span>22:00 prizes</span></div>
+        <div class="countdown-foot"><span>08:00 check-in</span><span>20:00 prizes</span></div>
       </div>
     </div>
   </section>
@@ -792,15 +793,15 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
     <div class="wrap">
       <div class="section-head section-head--right reveal">
         <h2 class="title">Schedule</h2>
-        <p class="lede">One day, start to finish. November 14, 2026. Fourteen hours from the first badge to the last prize.</p>
+        <p class="lede">One day, start to finish. November 14, 2026. Twelve hours from the first badge to the last prize.</p>
       </div>
 
       <ol class="rail">
         <li class="stop reveal">
           <span class="stop-time">08:00</span>
           <div class="stop-body">
-            <h3>Check-in begins</h3>
-            <p>Grab your swag and badge, find a table, get warmed up with your team, grab a breakfast snack.</p>
+            <h3>Check-in</h3>
+            <p>Badge, swag, breakfast. Find a table. If you came solo, this is where we match you into a team.</p>
           </div>
           <span class="stop-tag">1 hr</span>
         </li>
@@ -808,63 +809,47 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
           <span class="stop-time">09:00</span>
           <div class="stop-body">
             <h3>Opening</h3>
-            <p>The opening presentation, sponsor keynotes, and the theme announcement. Don't be late for this one, everything after depends on it.</p>
-          </div>
-          <span class="stop-tag">30 min</span>
-        </li>
-        <li class="stop reveal">
-          <span class="stop-time">09:30</span>
-          <div class="stop-body">
-            <h3>Workshop</h3>
-            <p>The world-famous How To Win A Hackathon workshop. Worth sitting through even if you've done this before.</p>
+            <p>Sponsor keynote, the theme drop, and a fast primer on how to actually win a hackathon. Don't be late, everything after depends on it.</p>
           </div>
           <span class="stop-tag">30 min</span>
         </li>
         <li class="stop stop--mark reveal">
-          <span class="stop-time">10:00</span>
+          <span class="stop-time">09:30</span>
           <div class="stop-body">
             <h3>Hacking starts</h3>
-            <p>Ten hours on the clock. Mentors are on the floor from here until submissions close.</p>
+            <p>Eight hours on the clock. Mentors are on the floor from here until submissions close.</p>
           </div>
-          <span class="stop-tag stop-tag--on">10 hrs</span>
+          <span class="stop-tag stop-tag--on">8 hrs</span>
         </li>
         <li class="stop reveal">
-          <span class="stop-time">12:00</span>
+          <span class="stop-time">12:30</span>
           <div class="stop-body">
             <h3>Lunch</h3>
-            <p>Have a break, let your brain rest, and recharge with a fully catered meal.</p>
-          </div>
-          <span class="stop-tag">1 hr</span>
-        </li>
-        <li class="stop reveal">
-          <span class="stop-time">13:00</span>
-          <div class="stop-body">
-            <h3>Workshop</h3>
-            <p>Second workshop of the day. Speaker and topic announced closer to the event.</p>
+            <p>Catered, eat at your table or take the break. The clock keeps running.</p>
           </div>
           <span class="stop-tag">45 min</span>
         </li>
-        <li class="stop reveal">
-          <span class="stop-time">18:00</span>
-          <div class="stop-body">
-            <h3>Dinner</h3>
-            <p>Catered dinner, because by this point everyone is hungry.</p>
-          </div>
-          <span class="stop-tag">1 hr</span>
-        </li>
         <li class="stop stop--mark reveal">
-          <span class="stop-time">20:00</span>
+          <span class="stop-time">17:30</span>
           <div class="stop-body">
-            <h3>Hacking ends</h3>
-            <p>Hard cutoff. Submit your project and start preparing for judging, which commences immediately.</p>
+            <h3>Submissions close</h3>
+            <p>Hard cutoff. Push what you have, get your demo loaded, and be ready to talk about it.</p>
           </div>
           <span class="stop-tag stop-tag--on">deadline</span>
         </li>
         <li class="stop reveal">
-          <span class="stop-time">22:00</span>
+          <span class="stop-time">17:45</span>
+          <div class="stop-body">
+            <h3>Judging &amp; dinner</h3>
+            <p>Judges walk the room table by table while dinner is out. Pitch them where you built it.</p>
+          </div>
+          <span class="stop-tag">1 hr 15</span>
+        </li>
+        <li class="stop reveal">
+          <span class="stop-time">19:00</span>
           <div class="stop-body">
             <h3>Closing &amp; prizes</h3>
-            <p>Find out who won, collect prizes, and then we send everyone home.</p>
+            <p>Winners per track, then the overall. Doors close at 20:00.</p>
           </div>
           <span class="stop-tag">1 hr</span>
         </li>
@@ -951,7 +936,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
         </details>
         <details>
           <summary>Do I need to know how to code?</summary>
-          <p>No. There's a workshop right after opening, mentors on the floor all day, and every team needs someone who can design the thing and pitch it.</p>
+          <p>No. Opening covers the basics, mentors are on the floor all day, and every team needs someone who can design the thing and pitch it.</p>
         </details>
         <details>
           <summary>What are the prizes?</summary>
@@ -1109,12 +1094,13 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   });
 
   /* ---------- hero wave field ---------- */
-  /* 18 sine lines. Geometry varies per line; timing does not, every
-     line shares one duration and only the delay is offset, so they
-     travel as one wave instead of beating against each other. */
+  /* 18 sine lines. Geometry varies per line; timing does not. Every line
+     shares one duration and travels exactly one of its own wavelengths per
+     cycle, so the field is perfectly periodic and the cascade below holds
+     forever instead of drifting into noise. */
   document.querySelectorAll('.waves').forEach(function(host){
 
-    var W = 1600, H = 620, LINES = 18, SVGNS = 'http://www.w3.org/2000/svg';
+    var W = 1600, H = 620, LINES = 18, DUR = 26, SVGNS = 'http://www.w3.org/2000/svg';
     var svg = document.createElementNS(SVGNS, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
     svg.setAttribute('preserveAspectRatio', 'none');
@@ -1130,16 +1116,22 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
       var wave  = 320 + t * 130;                     // long, lazy curves, original shape
       var phase = t * Math.PI * 1.6;
 
-      /* Seam fix without touching the shape: instead of forcing the curve to
-         fit a fixed 1600px slide, slide each line by exactly one of its own
-         wavelengths. It lands on an identical curve, so the restart is
-         invisible. Duration scales with distance so every line still moves
-         at the same speed. */
+      /* Each line slides by exactly one of its own wavelengths, so it lands
+         on an identical curve and the restart is invisible.
+
+         The duration is the same for every line, and that part matters. If
+         duration scaled with distance instead, every line would move at the
+         same px/second but advance through its own sine at a different rate,
+         because the wavelengths differ. The phase relationship built below
+         would come apart within a minute and never realign. Sharing one
+         duration means all 18 lines complete one wavelength together: the
+         whole field is periodic at DUR and the pattern is identical every
+         time around. Longer waves travel further per second, which is what
+         gives the field its depth. */
       var span = 2 * Math.PI * wave;                 // one full cycle, in px
-      var dur  = 22 * (span / W);                    // keeps px/second constant
 
       var d = 'M0,' + baseY.toFixed(1);
-      for(var x = 20; x <= W + span + 20; x += 20){
+      for(var x = 20; x <= W + span + 40; x += 20){
         var y = baseY + Math.sin((x / wave) + phase) * amp;
         d += ' L' + x + ',' + y.toFixed(1);
       }
@@ -1147,8 +1139,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
       var g = document.createElementNS(SVGNS, 'g');
       g.setAttribute('class', 'wave-line');
       g.style.setProperty('--shift', span.toFixed(2));
-      g.style.setProperty('--dur', dur.toFixed(2) + 's');
-      g.style.animationDelay = (-i * 0.6).toFixed(2) + 's';
+      g.style.setProperty('--dur', DUR + 's');
 
       var p = document.createElementNS(SVGNS, 'path');
       p.setAttribute('d', d);
@@ -1165,7 +1156,7 @@ h3{ font-size:19px; line-height:1.3; letter-spacing:-.01em; }
   /* ---------- countdown ---------- */
   /* Check-in, 08:00 Pacific on event day. -08:00 is PST in December. */
   var EVENT     = new Date('2026-11-14T08:00:00-08:00');
-  var EVENT_END = new Date('2026-11-14T22:00:00-08:00');
+  var EVENT_END = new Date('2026-11-14T20:00:00-08:00');
   /* Progress bar fills from the day registration opened to check-in. */
   var OPENED    = new Date('2026-08-01T00:00:00-07:00');
 
