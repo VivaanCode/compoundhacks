@@ -90,7 +90,7 @@ a{ text-decoration:none; color:inherit; }
 .nav{
   position:fixed; z-index:80; top:12px; left:50%; transform:translateX(-50%);
   width:min(var(--maxw), calc(100% - 24px));
-  display:flex; align-items:center; gap:16px;
+  display:flex; align-items:center; gap:26px;
   padding:11px 12px 11px 20px;
   border-radius:26px;
   background:rgba(255,252,245,.62);
@@ -110,6 +110,10 @@ a{ text-decoration:none; color:inherit; }
   transition:color .18s ease;
 }
 .nav-links a:hover{ color:var(--ink); }
+/* the icon later in this row already covers Discord on desktop, so the word is
+   a duplicate here. It comes back under 760px, where the icon is hidden and
+   this list becomes the burger menu. */
+.nav-link-discord{ display:none; }
 .nav-right{ display:flex; align-items:center; gap:12px; }
 .nav-discord{ display:flex; color:rgba(46,33,25,.58); transition:color .18s ease; }
 .nav-discord:hover{ color:var(--ink); }
@@ -501,6 +505,7 @@ a{ text-decoration:none; color:inherit; }
   .nav-links a:last-child{ border-bottom:0; }
   .nav-burger{ display:block; }
   .nav-discord{ display:none; }
+  .nav-link-discord{ display:block; }
   .nav{ padding:10px 10px 10px 14px; gap:10px; }
   .nav-brand{ font-size:14.5px; gap:8px; }
   .nav-apply{ padding:8px 15px; font-size:13.5px; }
@@ -539,12 +544,12 @@ a{ text-decoration:none; color:inherit; }
     <a href="#team">Team</a>
     <a href="#sponsors">Sponsors</a>
     <a href="#faq">FAQ</a>
-    <a href="https://discord.gg/nPBEjKAJnU" target="_blank" rel="noopener">Discord</a>
-  </div>
-  <div class="nav-right">
+    <a class="nav-link-discord" href="https://discord.gg/nPBEjKAJnU" target="_blank" rel="noopener">Discord</a>
     <a class="nav-discord" href="https://discord.gg/nPBEjKAJnU" target="_blank" rel="noopener" aria-label="Discord">
       <svg viewBox="0 0 127.14 96.36" fill="currentColor" aria-hidden="true"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
     </a>
+  </div>
+  <div class="nav-right">
     <a class="nav-apply" href="https://luma.com/q74q5lly" target="_blank" rel="noopener">Sign up</a>
     <button class="nav-burger" id="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
