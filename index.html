@@ -349,6 +349,25 @@ a{ text-decoration:none; color:inherit; }
 .inkind-note p{ margin:0; font-size:14.5px; color:var(--muted); }
 .inkind-note b{ color:var(--ink); font-weight:600; }
 
+/* ============ team ============ */
+.band--divide{ border-bottom:1px solid var(--line-soft); }
+.team-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.person{
+  background:var(--surface); border:1px solid var(--line-soft);
+  border-radius:16px; padding:22px 24px;
+  transition:border-color .2s ease;
+}
+.person:hover{ border-color:var(--line); }
+.person .who{
+  display:block; font-size:17px; font-weight:700;
+  letter-spacing:-.02em; color:var(--ink);
+}
+.person .role{
+  display:block; margin-top:7px; font-family:var(--mono);
+  font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--dim);
+}
+.person--lead .role{ color:var(--mint); }
+
 /* ============ faq ============ */
 .faq{ display:grid; gap:8px; }
 .faq details{
@@ -409,6 +428,7 @@ a{ text-decoration:none; color:inherit; }
   .stop{ grid-template-columns:66px 1fr; }
   .stop-tag{ grid-column:2; margin-top:8px; }
   .stats{ grid-template-columns:repeat(2,1fr); }
+  .team-grid{ grid-template-columns:repeat(2,1fr); }
   .tier-grid--3, .tier-grid--4{ grid-template-columns:repeat(2,1fr); }
   .tier-grid--6{ grid-template-columns:repeat(3,1fr); }
   .footer-cols{ gap:40px; }
@@ -434,6 +454,7 @@ a{ text-decoration:none; color:inherit; }
 }
 @media (max-width:520px){
   .stats{ grid-template-columns:1fr; }
+  .team-grid{ grid-template-columns:1fr; }
   .tier-grid--6{ grid-template-columns:repeat(2,1fr); }
   .footer-cols{ gap:32px; }
 }
@@ -459,6 +480,7 @@ a{ text-decoration:none; color:inherit; }
   <div class="nav-links" id="nav-links">
     <a href="#about">About</a>
     <a href="#schedule">Schedule</a>
+    <a href="#team">Team</a>
     <a href="#sponsors">Sponsors</a>
     <a href="#faq">FAQ</a>
     <a href="https://discord.gg/nPBEjKAJnU" target="_blank" rel="noopener">Discord</a>
@@ -606,6 +628,36 @@ a{ text-decoration:none; color:inherit; }
   </div>
 </section>
 
+<!-- ============ TEAM ============ -->
+<section class="band band--base band--divide" id="team">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="eyebrow">Who's behind it</p>
+      <h2 class="band-title">Team</h2>
+      <p class="band-sub">Compound Hacks is put together by students, through DevFintech.</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="person person--lead">
+        <span class="who">Koushik O.</span>
+        <span class="role">Organizer &middot; Developer</span>
+      </div>
+      <div class="person person--lead">
+        <span class="who">Ayannah M.</span>
+        <span class="role">Organizer &middot; Outreach</span>
+      </div>
+      <div class="person">
+        <span class="who">Navya</span>
+        <span class="role">Outreach</span>
+      </div>
+      <div class="person">
+        <span class="who">Vivaan</span>
+        <span class="role">Co-developer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ SPONSORS ============ -->
 <section class="band band--base" id="sponsors">
   <div class="wrap">
@@ -741,6 +793,7 @@ a{ text-decoration:none; color:inherit; }
           <h4>Event</h4>
           <a href="#about">About</a>
           <a href="#schedule">Schedule</a>
+          <a href="#team">Team</a>
           <a href="#sponsors">Sponsors</a>
           <a href="#faq">FAQ</a>
         </div>
